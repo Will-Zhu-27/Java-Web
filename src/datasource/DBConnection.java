@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import domain.Subject;
-import src.datasource.String;
-import src.datasource.org;
 
 public class DBConnection {
 	 private static final String url = "jdbc:postgresql://localhost:5432/Sample";
