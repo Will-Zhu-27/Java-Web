@@ -34,9 +34,13 @@ public class DBConnection {
 			 Class.forName("org.postgresql.Driver");
 			 conn = DriverManager.getConnection(url, user, password);
 			 if (conn != null) {
-				 System.out.println("Connected to the PostgreSQL server successfully.");
+				 System.out.println("Connected to the local PostgreSQL server successfully.");
 			 } else {
-				 System.out.println("Failed to make connection!");
+				 System.out.println("Try to connect to Cloud PostgreSQL server");
+				 DriverManager.registerDriver(new org.postgresql.Driver());
+				 String dbUrl = System.getenv("JDBC_DATABASE_URL");
+				 conn = DriverManager.getConnection(dbUrl);
+				 System.out.println("Connected to the Cloud PostgreSQL server successfully.");
 			 }
 		 } catch (SQLException e) {
 			 System.out.println(e.getMessage());
@@ -51,9 +55,10 @@ public class DBConnection {
 	 public static void main(String[] args) {
 		 DBConnection app = new DBConnection();
 		 app.connect();
+		 // test connection
 		 List<Subject> sub= Subject.getAllSubjects();
    		 for (Subject subject : Subject.getAllSubjects()) {
    			 System.out.println(subject.getSubjectCode());
-  		  } // for loop
+  		  }
 	 }
 }

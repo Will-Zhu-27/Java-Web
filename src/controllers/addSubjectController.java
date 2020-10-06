@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import domain.Subject;
+
 /**
  * Servlet implementation class addSubjectController
  */
@@ -40,8 +42,20 @@ public class addSubjectController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+
+        String subjectCode = request.getParameter("code");
+        String name = request.getParameter("name");
+        String corrdinator = request.getParameter("corrdinator_name");
+        
+        Subject subject = new Subject(subjectCode,name,corrdinator);
+ 
+        subject.insert();
+
+
+        String view = "/subjects.jsp";
+        ServletContext servletContext = getServletContext();
+        RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(view);
+        requestDispatcher.forward(request, response);
 	}
 
 }
